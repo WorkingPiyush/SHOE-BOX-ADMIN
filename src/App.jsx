@@ -1,10 +1,34 @@
 import './App.css'
+import { Route, Routes } from 'react-router-dom'
+import Login from './Pages/Auth/Login'
+import Signup from '../../FRONTEND/src/Pages/Auth/Signup'
+import ForGuestOnly from './Guards/ForGuestOnly'
+import AdminLayout from './Layout/AdminLayout'
+import Dashboard from './Pages/Dashboard/Dashboard'
+import Orders from './Pages/Dashboard/Orders'
+import OrderDetail from './Pages/Dashboard/OrderDetail'
+import UserList from './Pages/Dashboard/UserList'
+import ProductsPage from './Pages/Dashboard/ProductsPage'
 
 function App() {
 
   return (
     <div>
-      Admin is here to rock
+      <Routes>
+        {/* <Route path="/dashboard" element={<Home />} /> */}
+        <Route element={<ForGuestOnly />}>
+          {/* for guest users only */}
+          <Route path='/' element={<Login />} />
+          <Route path="/login" element={<Signup />} />
+        </Route>
+        <Route element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="orders/:id" element={<OrderDetail />} />
+          <Route path="users" element={<UserList />} />
+          <Route path="products" element={<ProductsPage />} />
+        </Route>
+      </Routes>
     </div>
   )
 }
