@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { postProduct } from '../../Api/apiUser';
 import { productSchema } from '../../Validator/productValidation';
 import { toast } from 'react-toastify';
+import { postProduct } from '../../Api/apiProducts';
 
 const inputCls = "w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm outline-none focus:border-stone-800";
 const cardCls = "rounded-2xl border border-stone-200 bg-white p-5 shadow-sm";

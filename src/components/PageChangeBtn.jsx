@@ -1,6 +1,5 @@
 
 function PageChangeBtn({ handlePrevPage, handleNextPage, currentPage, data }) {
-    console.log(data)
     return (
         <div className="flex items-center justify-center gap-5 p-4">
             <button onClick={handlePrevPage} disabled={currentPage === 1}

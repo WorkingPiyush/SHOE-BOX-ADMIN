@@ -7,8 +7,6 @@ export const fetchAdmin = async () => {
     return res.data;
 };
 
-
-
 export const loginAdmin = async (data) => await axios.post(
     `${import.meta.env.VITE_API_URL}/admin/login`,
     data,
@@ -17,14 +15,3 @@ export const loginAdmin = async (data) => await axios.post(
         withCredentials: true,
     }
 );
-
-export const postProduct = async (data) => {
-    const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/admin/add`,
-        data,
-        {
-            withCredentials: true,
-        }
-    );
-    return response.data
-}

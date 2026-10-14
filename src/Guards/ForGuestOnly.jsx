@@ -5,7 +5,7 @@ import { useUser } from '../hooks/useUser';
 const ForGuestOnly = () => {
   const { data: user } = useUser();
 
-  if (user) return <Navigate to='/dashboard' replace />;
+  if (user) return <Navigate to='/' replace />;
   return <Outlet />;
 }
 

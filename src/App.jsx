@@ -9,6 +9,8 @@ import Orders from './Pages/Dashboard/Orders'
 import OrderDetail from './Pages/Dashboard/OrderDetail'
 import UserList from './Pages/Dashboard/UserList'
 import ProductsPage from './Pages/Dashboard/ProductsPage'
+import ProductPreview from './Pages/Dashboard/ProductPreview'
+import ProductEditPage from './Pages/Dashboard/ProductEditPage'
 
 function App() {
 
@@ -18,8 +20,7 @@ function App() {
         {/* <Route path="/dashboard" element={<Home />} /> */}
         <Route element={<ForGuestOnly />}>
           {/* for guest users only */}
-          <Route path='/' element={<Login />} />
-          <Route path="/login" element={<Signup />} />
+          <Route path='/login' element={<Login />} />
         </Route>
         <Route element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
@@ -27,6 +28,8 @@ function App() {
           <Route path="orders/:id" element={<OrderDetail />} />
           <Route path="users" element={<UserList />} />
           <Route path="products" element={<ProductsPage />} />
+          <Route path="products/:gender/:slug" element={<ProductPreview />} />
+          <Route path="products/:gender/:slug/edit" element={<ProductEditPage />} />
         </Route>
       </Routes>
     </div>

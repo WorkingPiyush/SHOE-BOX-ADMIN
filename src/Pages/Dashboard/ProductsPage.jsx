@@ -1,7 +1,10 @@
+/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
-import axios from 'axios';
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import PageChangeBtn from "../../components/PageChangeBtn";
+import { Link } from "react-router-dom";
+import { fetchProduct } from "../../Api/apiProducts";
 
 const inr = (n) => "₹" + n.toLocaleString("en-IN");
 const GENDER_SECTION = ["male", "female", "kids"];
@@ -12,7 +15,7 @@ const upperCase = (word) => `${word.charAt(0).toUpperCase()}${word.slice(1, 999)
 
 function ProductIcon({ src, alt }) {
   return src ? (
-    <img src={src} alt={alt} className="h-10 w-10 shrink-0 rounded-lg object-cover" />
+    <img src={src} alt={alt} draggable={"false"} className="h-10 w-10 shrink-0 rounded-lg object-cover" />
   ) : (
     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#f3ecdc] text-xl">👟</span>
   );
@@ -21,6 +24,13 @@ export default function ProductsPage() {
   const [page, setPage] = useState(1);
   const [gender, setGender] = useState('male');
   const queryClient = useQueryClient();
+  
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['products', gender, page],
+    queryFn: fetchProduct,
+    staleTime: 10 * 60 * 1000,
+    keepPreviousData: true,
+  });
 
   const handlePrevPage = () => {
     if (page > 1) {
@@ -33,19 +43,6 @@ export default function ProductsPage() {
       setPage((prev) => prev + 1);
     }
   };
-
-  const fetchProduct = async ({ queryKey }) => {
-    const [_key, gender, page] = queryKey;
-    const res = await axios.get(`${import.meta.env.VITE_API_URL}/product/products?gender=${gender}&page=${page}&limit=30`);
-    return res.data;
-  };
-
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['products', gender, page],
-    queryFn: fetchProduct,
-    staleTime: 10 * 60 * 1000,
-    keepPreviousData: true,
-  })
 
   const updateGender = (e) => {
     setGender(e.target.value);
@@ -110,7 +107,7 @@ export default function ProductsPage() {
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
                         <ProductIcon src={p.thumbnail} alt={p.name} />
-                        <span className="font-medium">{p.name}</span>
+                        <Link to={`/products/${p.gender}/${p.slug}`} className="font-medium">{p.name}</Link>
                       </div>
                     </td>
                     <td className="px-4 py-3">{upperCase(p.brand)}</td>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { NavLink, Outlet } from 'react-router-dom';
+import { Navigate, NavLink, Outlet } from 'react-router-dom';
+import { useUser } from '../hooks/useUser';
 
 
 const initialOrders = [
@@ -29,6 +30,8 @@ const initialOrders = [
 ];
 
 function AdminLayout() {
+    const { data: admin } = useUser();
+    if (!admin) return <Navigate to='/login' replace />;
     const [orders, setOrders] = useState(initialOrders);
 
     // TODO: call your API here (e.g. PATCH /orders/:id) then update state

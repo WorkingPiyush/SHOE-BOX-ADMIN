@@ -31,7 +31,7 @@ function Login() {
 
         queryClient.setQueryData(['admin'], admin);
         reset();
-        navigate("/dashboard", { replace: true });
+        navigate("/", { replace: true });
       } else {
         toast.error("Invalid credentials")
         throw new Error("Invalid credentials");

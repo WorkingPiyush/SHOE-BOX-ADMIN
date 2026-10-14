@@ -20,3 +20,8 @@ export const productSchema = z.object({
         .min(1, "Upload at least 1 image.")
         .max(2, "You can upload a maximum of 2 images."),
 })
+
+export const newImageSchema = z
+    .instanceof(File)
+    .refine((f) => f.size <= MAX_FILE_SIZE, "Each image must be smaller than 2MB.")
+    .refine((f) => ACCEPTED_IMAGE_TYPES.includes(f.type), "Only JPG, PNG and WebP images are allowed.");
