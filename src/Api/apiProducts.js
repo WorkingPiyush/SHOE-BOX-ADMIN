@@ -43,9 +43,13 @@ export const getProducts = async ({ slug, gender }) => {
 }
 
 export const deleteProduct = async ({ id }) => {
-    await axios.delete(`${import.meta.env.VITE_API_URL}/admin/product/delete/?productId=${id}`, {
-        withCredentials: true,
-    })
+    try {
+        await axios.delete(`${import.meta.env.VITE_API_URL}/admin/product/delete/?productId=${id}`, {
+            withCredentials: true,
+        })
+    } catch (error) {
+        throw new Error(error.response?.data?.message || error.message, { cause: error });
+    }
 }
 
 

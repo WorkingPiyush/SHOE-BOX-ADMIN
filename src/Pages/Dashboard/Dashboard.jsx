@@ -24,8 +24,8 @@ function Dashboard() {
     };
     const [form, setForm] = useState(empty);
     const [images, setImages] = useState([]);
-
     const set = (key) => (e) => setForm({ ...form, [key]: e.target.value });
+    const upperCase = (word) => `${word.charAt(0).toUpperCase()}${word.slice(1, 10)}`;
 
     const toggleSize = (s) =>
         setForm({
@@ -69,8 +69,6 @@ function Dashboard() {
             console.log(error)
         }
     };
-
-    const upperCase = (word) => `${word.charAt(0).toUpperCase()}${word.slice(1, 10)}`
 
     return (
         <>

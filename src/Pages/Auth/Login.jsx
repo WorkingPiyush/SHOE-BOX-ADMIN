@@ -22,8 +22,7 @@ function Login() {
     try {
       setLoading(true);
       const res = await loginAdmin(data);
-      if (res.data.role !== "ADMIN") {
-
+      if (res.isAdmin) {
         const admin = await queryClient.fetchQuery({
           queryKey: ['admin'],
           queryFn: fetchAdmin,
