@@ -49,13 +49,3 @@ export const deleteProduct = async ({ id }) => {
 }
 
 
-export const getOrders = async () => {
-    try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/admin/orders`, {
-            withCredentials: true,
-        });
-        return res.data
-    } catch (err) {
-        throw new Error(err.response?.data?.message || err.message, { cause: err });
-    }
-}

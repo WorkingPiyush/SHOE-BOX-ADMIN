@@ -24,7 +24,7 @@ export default function ProductsPage() {
   const [page, setPage] = useState(1);
   const [gender, setGender] = useState('male');
   const queryClient = useQueryClient();
-  
+
   const { data, isLoading, error } = useQuery({
     queryKey: ['products', gender, page],
     queryFn: fetchProduct,
@@ -67,13 +67,15 @@ export default function ProductsPage() {
     <div className="min-h-screen bg-[#faf6ee] p-4 text-stone-800 md:p-8">
       <div className="mx-auto max-w-6xl">
         <div className="mb-5 flex items-center justify-between">
-          <h2 className="text-xl font-semibold">Products</h2>
-          <span className="text-sm text-stone-500">Showing {data?.product?.length} items</span>
-          <div >
+          <div>
+            <h2 className="text-xl font-semibold">Products</h2>
+            <span className="text-sm text-stone-500">Showing {data?.product?.length} items</span>
+          </div>
+          <div className="flex flex-col items-center md:flex-row">
             <label className="gap-2 text-sm text-stone-600 px-2">Selected Gender:</label>
             <select value={gender} onChange={updateGender} name="gender" id="gender-select" className="rounded-lg border border-stone-300 bg-white px-2 py-1">
               {GENDER_SECTION.map((tag) => (
-                <option key={tag}>{tag}</option>
+                <option className="text-sm" key={tag}>{tag}</option>
               ))}
             </select>
           </div>

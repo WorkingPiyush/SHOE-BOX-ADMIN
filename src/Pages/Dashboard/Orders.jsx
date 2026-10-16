@@ -1,7 +1,11 @@
-import { Link, useOutletContext } from 'react-router-dom';
-import { useOrders } from '../../hooks/useProducts';
-const inr = (n) => "₹" + n?.toLocaleString("en-IN");
+import { Link } from 'react-router-dom';
+import { orderUpdate } from '../../Api/apiOrders.js';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useOrders } from '../../hooks/useOrders.js';
 
+
+
+const inr = (n) => "₹" + n?.toLocaleString("en-IN");
 const cardCls = "rounded-2xl border border-stone-200 bg-white p-5 shadow-sm";
 const STATUSES = ["confirmed", "shipped", "delivered", "cancelled"];
 const badgeCls = {
@@ -20,9 +24,21 @@ const StatusBadge = ({ status }) => (
 
 function Orders() {
     const { data: orders = [], isLoading } = useOrders();
+    const queryClient = useQueryClient();
 
     const headers = ["Order", "Customer", "Date", "Total", "Status", "Update"];
 
+    const { mutate: changeStatus, isPending } = useMutation({
+        mutationFn: ({ id, status }) => orderUpdate({ id, status }),
+        onSuccess: (_res, { id }) => {
+            queryClient.invalidateQueries({ queryKey: ["orders"] });
+            queryClient.invalidateQueries({ queryKey: ["order", id] });
+        },
+    })
+
+    if (isLoading) {
+        return <h1>Updating...</h1>
+    }
     return (
         <>
             <h2 className="mb-5 text-xl font-semibold">Orders</h2>
@@ -32,19 +48,20 @@ function Orders() {
                         <tr>{headers.map((h) => <th key={h} className="px-4 py-3 font-medium">{h}</th>)}</tr>
                     </thead>
                     <tbody>
-                        {orders.map((o, idx) => (
+                        {orders.map((o) => (
                             <tr key={o.id} className="border-b border-stone-100 last:border-0">
                                 <td className="px-4 py-3">
-                                    <Link to={`/orders/${o.id}`} className="font-medium text-amber-800 hover:underline">{idx + 1}</Link>
+                                    <Link to={`/orders/${o?.id}`} className="font-medium text-amber-800 hover:underline">{o?.orderId}</Link>
                                 </td>
-                                <td className="px-4 py-3">{o.user}</td>
+                                <td className="px-4 py-3">{o?.user?.fullName}</td>
                                 <td className="px-4 py-3 text-stone-500">{o.date}</td>
-                                <td className="px-4 py-3">{inr(o.total)}</td>
-                                <td className="px-4 py-3"><StatusBadge status={o.status} /></td>
+                                <td className="px-4 py-3">{inr(o.totalAmount)}</td>
+                                <td className="px-4 py-3"><StatusBadge status={o.orderStatus} /></td>
                                 <td className="px-4 py-3">
                                     <select
-                                        value={o.status}
-                                        onChange={(e) => updateStatus(o.id, e.target.value)}
+                                        value={o.orderStatus}
+                                        disabled={isPending}
+                                        onChange={(e) => changeStatus({ id: o.id, status: e.target.value })}
                                         className="rounded-lg border border-stone-300 bg-white px-2 py-1 text-sm capitalize"
                                     >
                                         {STATUSES.map((s) => <option key={s}>{s}</option>)}
