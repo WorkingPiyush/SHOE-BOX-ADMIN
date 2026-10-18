@@ -15,8 +15,8 @@ const AdminProfile = lazy(() => import('./Pages/Dashboard/AdminProfile'))
 import Login from './Pages/Auth/Login'
 import ForGuestOnly from './Guards/ForGuestOnly'
 import AdminLayout from './Layout/AdminLayout'
-import FullScreenLoader from '../../FRONTEND/src/components/FullScreenLoader'
 import ForRegisteredOnly from './Guards/ForRegisteredOnly'
+import FullScreenLoader from './components/FullScreenLoader'
 
 
 function App() {
