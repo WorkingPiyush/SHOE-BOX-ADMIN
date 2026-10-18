@@ -11,7 +11,7 @@ const ForRegisteredOnly = () => {
         return <FullScreenLoader />
     }
 
-    if (!admin) {
+    if (!admin || admin.role !== "ADMIN") {
         return <Navigate to="/login" replace state={{ from: location }} />;
     }
 

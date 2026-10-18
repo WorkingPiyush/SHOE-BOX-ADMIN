@@ -36,6 +36,7 @@ function Login() {
         reset();
         navigate("/", { replace: true });
       } else {
+        reset();
         toast.error("Invalid credentials")
         throw new Error("Invalid credentials");
       }
@@ -46,7 +47,7 @@ function Login() {
       setLoading(false);
     }
   };
-  
+
   if (loading) {
     return <FullScreenLoader />
   }
