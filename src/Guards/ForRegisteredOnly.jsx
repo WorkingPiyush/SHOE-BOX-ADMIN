@@ -1,12 +1,20 @@
-import { Navigate, Outlet } from 'react-router-dom'
-import { useUser } from '../hooks/useUser';
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import FullScreenLoader from '../components/FullScreenLoader';
+import { useAuth } from '../context/AuthContext';
 
 
 const ForRegisteredOnly = () => {
-    const { data: user, isLoading } = useUser();
-    if (isLoading) return <FullScreenLoader />
-    if (!user) return <Navigate to='/' replace />;
+    const { user: admin, loading } = useAuth();
+    const location = useLocation();
+
+    if (loading) {
+        return <FullScreenLoader />
+    }
+
+    if (!admin) {
+        return <Navigate to="/login" replace state={{ from: location }} />;
+    }
+
     return <Outlet />;
 }
 

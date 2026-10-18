@@ -1,11 +1,13 @@
+import FullScreenLoader from "../../components/FullScreenLoader";
 import { useLocalUsers } from "../../hooks/useUser";
 
 const cardCls = "rounded-2xl border border-stone-200 bg-white p-5 shadow-sm";
 function UserList() {
-    const { data:users, isLoading } = useLocalUsers();
+    const { data: users, isLoading } = useLocalUsers();
     const headers = ["User", "Email", "Phone", "Role"];
+    
     if (isLoading) {
-        return <p>Loading...</p>
+        return <FullScreenLoader />
     }
     return (
         <>
@@ -17,7 +19,7 @@ function UserList() {
                     </thead>
                     <tbody>
                         {users.map((u) => (
-                            <tr key={u.id} className="border-b border-stone-100 last:border-0">
+                            <tr key={u._id} className="border-b border-stone-100 last:border-0">
                                 <td className="py-2">
                                     <div className="flex items-center gap-3">
                                         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#efe5cf] text-xs font-semibold">

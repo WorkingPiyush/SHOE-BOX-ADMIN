@@ -1,12 +1,8 @@
-import { Navigate, NavLink, Outlet } from 'react-router-dom';
-import { useUser } from '../hooks/useUser';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 
 
 
 function AdminLayout() {
-    const { data: admin } = useUser();
-    if (!admin) return <Navigate to='/login' replace />;
-
     const nav = [
         { to: "/", label: "Dashboard", end: true },
         { to: "/products", label: "Products" },
@@ -18,9 +14,11 @@ function AdminLayout() {
     return (
         <div className="min-h-screen bg-[#faf6ee] text-stone-800 md:flex">
             <aside className="border-b border-stone-200 bg-white md:min-h-screen md:w-56 md:border-b-0 md:border-r">
-                <div className="px-5 py-4 text-lg font-bold">
-                    👟 Shoe Box <span className="text-xs font-normal text-stone-500">Admin</span>
-                </div>
+                <Link to="/">
+                    <div className="px-5 py-4 text-lg font-bold">
+                        👟 Shoe Box <span className="text-xs font-normal text-stone-500">Admin</span>
+                    </div>
+                </Link>
                 <nav className="flex gap-1 px-3 pb-3 md:flex-col">
                     {nav.map((n) => (
                         <NavLink

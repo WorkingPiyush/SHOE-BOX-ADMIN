@@ -1,11 +1,20 @@
 import { Navigate, Outlet } from 'react-router-dom'
-import { useUser } from '../hooks/useUser';
+import { useAuth } from '../context/AuthContext';
+import FullScreenLoader from '../components/FullScreenLoader';
 
 
 const ForGuestOnly = () => {
-  const { data: user } = useUser();
+  const { user: admin, loading } = useAuth();
 
-  if (user) return <Navigate to='/' replace />;
+  if (loading) {
+    console.log("this is working")
+    return <FullScreenLoader />
+  }
+
+  if (admin) {
+     return <Navigate to="/" replace />;
+  }
+
   return <Outlet />;
 }
 

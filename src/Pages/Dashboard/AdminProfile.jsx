@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { useUser } from '../../hooks/useUser.js'
 import { useQueryClient } from "@tanstack/react-query";
 import { logoutAdmin } from "../../Api/apiUser.js";
 import FullScreenLoader from "../../components/FullScreenLoader.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 
 const cardCls = "rounded-2xl border border-stone-200 bg-white p-5 shadow-sm";
@@ -17,7 +17,7 @@ function Row({ label, value }) {
 }
 
 export default function AdminProfile() {
-  const { data: admin, isLoading } = useUser()
+  const { user: admin, setUser, loading } = useAuth()
   const queryClient = useQueryClient();
 
   const navigate = useNavigate();
@@ -29,6 +29,7 @@ export default function AdminProfile() {
     if (res.success) {
       queryClient.setQueryData(['admin'], null);
       queryClient.invalidateQueries(['admin']);
+      setUser(null);
       navigate('/login', { replace: true });
     }
   }
@@ -41,7 +42,7 @@ export default function AdminProfile() {
     .toUpperCase();
 
 
-  if (isLoading) {
+  if (loading) {
     return <FullScreenLoader />
   }
   return (

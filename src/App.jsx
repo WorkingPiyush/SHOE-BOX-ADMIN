@@ -16,6 +16,7 @@ import Login from './Pages/Auth/Login'
 import ForGuestOnly from './Guards/ForGuestOnly'
 import AdminLayout from './Layout/AdminLayout'
 import FullScreenLoader from '../../FRONTEND/src/components/FullScreenLoader'
+import ForRegisteredOnly from './Guards/ForRegisteredOnly'
 
 
 function App() {
@@ -27,15 +28,17 @@ function App() {
             <Route path='/login' element={<Login />} />
           </Route>
           <Route element={<AdminLayout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="orders" element={<Orders />} />
-            <Route path="orders/:id" element={<OrderDetail />} />
-            <Route path="users" element={<UserList />} />
-            <Route path="products" element={<ProductsPage />} />
-            <Route path="products/:gender/:slug" element={<ProductPreview />} />
-            <Route path="products/:gender/:slug/edit" element={<ProductEditPage />} />
-            <Route path="profile" element={<AdminProfile />} />
-            <Route path="*" element={<Login />} />
+            <Route element={<ForRegisteredOnly />}>
+              <Route index element={<Dashboard />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="orders/:id" element={<OrderDetail />} />
+              <Route path="users" element={<UserList />} />
+              <Route path="products" element={<ProductsPage />} />
+              <Route path="products/:gender/:slug" element={<ProductPreview />} />
+              <Route path="products/:gender/:slug/edit" element={<ProductEditPage />} />
+              <Route path="profile" element={<AdminProfile />} />
+              <Route path="*" element={<Login />} />
+            </Route>
           </Route>
         </Routes>
       </Suspense>

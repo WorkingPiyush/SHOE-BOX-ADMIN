@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from "react-toastify";
 import { fetchAdmin, loginAdmin } from "../../Api/apiUser";
+import { useAuth } from "../../context/AuthContext";
+import FullScreenLoader from "../../components/FullScreenLoader";
 
 
 function Login() {
@@ -16,6 +18,7 @@ function Login() {
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const { setUser } = useAuth();
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (data) => {
@@ -29,6 +32,7 @@ function Login() {
         });
 
         queryClient.setQueryData(['admin'], admin);
+        setUser(admin)
         reset();
         navigate("/", { replace: true });
       } else {
@@ -42,7 +46,10 @@ function Login() {
       setLoading(false);
     }
   };
-
+  
+  if (loading) {
+    return <FullScreenLoader />
+  }
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-6">
       <div className="w-full max-w-112.5 bg-white text-black rounded-2xl shadow-2xl overflow-hidden border border-black">
