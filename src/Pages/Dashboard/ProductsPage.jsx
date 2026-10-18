@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import PageChangeBtn from "../../components/PageChangeBtn";
@@ -20,6 +19,7 @@ function ProductIcon({ src, alt }) {
     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#f3ecdc] text-xl">👟</span>
   );
 }
+
 export default function ProductsPage() {
   const [page, setPage] = useState(1);
   const [gender, setGender] = useState('male');

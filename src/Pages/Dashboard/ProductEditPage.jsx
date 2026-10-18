@@ -41,8 +41,6 @@ function ProductEditPage() {
         }
     }, [product])
 
-
-
     const toggleSize = (s) =>
         setForm({
             ...form,
@@ -97,7 +95,7 @@ function ProductEditPage() {
         }
     };
 
-    const upperCase = (word) => `${word.charAt(0).toUpperCase()}${word.slice(1, 10)}`
+    const upperCase = (word) => `${word.charAt(0).toUpperCase()}${word.slice(1, 999)}`
 
     return (
         <>

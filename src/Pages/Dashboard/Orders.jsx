@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { orderUpdate } from '../../Api/apiOrders.js';
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useOrders } from '../../hooks/useOrders.js';
+import FullScreenLoader from '../../components/FullScreenLoader.jsx';
 
 
 
@@ -14,7 +15,6 @@ const badgeCls = {
     delivered: "bg-emerald-100 text-emerald-800",
     cancelled: "bg-rose-100 text-rose-800",
 };
-
 const StatusBadge = ({ status }) => (
     <span className={`rounded-full px-2.5 py-1 text-xs font-medium capitalize ${badgeCls[status]}`}>
         {status}
@@ -37,7 +37,7 @@ function Orders() {
     })
 
     if (isLoading) {
-        return <h1>Updating...</h1>
+        return <FullScreenLoader />
     }
     return (
         <>

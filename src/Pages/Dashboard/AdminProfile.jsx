@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from '../../hooks/useUser.js'
 import { useQueryClient } from "@tanstack/react-query";
 import { logoutAdmin } from "../../Api/apiUser.js";
+import FullScreenLoader from "../../components/FullScreenLoader.jsx";
 
 
 const cardCls = "rounded-2xl border border-stone-200 bg-white p-5 shadow-sm";
@@ -41,7 +42,7 @@ export default function AdminProfile() {
 
 
   if (isLoading) {
-    return <p>Loading....</p>
+    return <FullScreenLoader />
   }
   return (
     <div className="min-h-screen bg-[#faf6ee] p-4 text-stone-800 md:p-8">

@@ -2,10 +2,11 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useProducts } from "../../hooks/useProducts";
 import { deleteProduct } from "../../Api/apiProducts";
+import { Gallery } from "../../components/HelperComponents";
+import FullScreenLoader from "../../components/FullScreenLoader";
 
 
 const LIST_PATH = "/products";
-
 const inr = (n) => "₹" + n.toLocaleString("en-IN");
 const cardCls = "rounded-2xl border border-stone-200 bg-white p-5 shadow-sm";
 
@@ -14,37 +15,6 @@ function InfoRow({ label, value, className }) {
     <div className="flex justify-between gap-4 py-2 text-sm">
       <span className="text-stone-500">{label}</span>
       <span className={`text-right font-medium ${className}`}>{value}</span>
-    </div>
-  );
-}
-
-function Gallery({ images, name }) {
-  const [active, setActive] = useState(0);
-  const hasImages = images.length > 0;
-
-  return (
-    <div>
-      <div className="flex aspect-square items-center justify-center overflow-hidden cursor-pointer rounded-xl bg-[#f3ecdc] hover:scale-105 hover:shadow transition-shadow delay-3 ease-in-out">
-        {hasImages ? (
-          <img src={images[active]} alt={name} className="h-full w-full object-cover" />
-        ) : (
-          <span className="text-7xl">👟</span>
-        )}
-      </div>
-      {images.length > 1 && (
-        <div className="mt-3 flex gap-3">
-          {images.map((src, i) => (
-            <button
-              key={i}
-              onClick={() => setActive(i)}
-              className={`h-16 w-16 overflow-hidden rounded-lg border-2 ${active === i ? "border-stone-800" : "border-stone-200"
-                }`}
-            >
-              <img src={src} alt="" className="h-full w-full object-cover" />
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
@@ -66,8 +36,9 @@ export default function ProductPreview() {
   };
 
   if (isLoading) {
-    return <h1>Loading....</h1>
+    return <FullScreenLoader />
   }
+  
   if (!product) {
     return (
       <div className="min-h-screen bg-[#faf6ee] p-4 text-stone-800 md:p-8">
@@ -78,7 +49,6 @@ export default function ProductPreview() {
       </div>
     );
   }
-
 
   return (
     <div className="min-h-screen bg-[#faf6ee] p-4 text-stone-800 md:p-8">

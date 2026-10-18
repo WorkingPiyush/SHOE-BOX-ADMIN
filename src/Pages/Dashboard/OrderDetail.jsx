@@ -2,6 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { orderUpdate } from '../../Api/apiOrders';
 import { useOrder } from '../../hooks/useOrders';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import FullScreenLoader from '../../components/FullScreenLoader';
 
 const cardCls = "rounded-2xl border border-stone-200 bg-white p-5 shadow-sm";
 const badgeCls = {
@@ -35,15 +36,15 @@ function OrderDetail() {
             queryClient.invalidateQueries({ queryKey: ["order", id] });
         },
     })
-    
+
     const capitalize = (w) => (`${w.charAt(0).toUpperCase()}${w.slice(1, 70)}`)
     const normalDate = (d) => (`${d.getDate()}-${d.getMonth()}-${d.getFullYear()}`)
 
     if (isLoading) {
-        return <p>Loading...</p>;
+        return <FullScreenLoader />;
     }
 
-    if (!order) return <p>Order not found.</p>;
+    if (!order) return <p className='h-screen text-center'>Order not found.</p>;
     return (
         <div className="space-y-5">
             <button onClick={() => navigate("/orders")} className="text-sm text-stone-600 cursor-pointer hover:underline">
